@@ -12,7 +12,8 @@ import {
   List,
   ListItem,
   Picker,
-  Content
+  Content,
+  Icon
 } from "native-base";
 
 // Style
@@ -22,6 +23,19 @@ import styles from "./styles";
 import coffeeStore from "../../store/coffeeStore";
 
 class CoffeeDetail extends Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: navigation.getParam("coffeeShop").name,
+
+      headerRight: (
+        <Icon
+          name="shopping-cart"
+          type="FontAwesome"
+          onPress={() => navigation.navigate("Cart")}
+        />
+      )
+    };
+  };
   state = {
     drink: "Cappuccino",
     option: "Small"
@@ -39,10 +53,16 @@ class CoffeeDetail extends Component {
     });
   };
 
+  // coffeeshop = ({ navigation }) => {
+  //   coffeeshops: navigation.getParam("coffeeShop").coffeeshops;
+  // };
+
   render() {
     const coffeeshops = coffeeStore.coffeeshops;
     if (!coffeeshops) return <Content />;
-    const coffeeshop = coffeeshops[0];
+    // const coffeeshop = coffeeshops[0];
+    const coffeeshop = this.props.navigation.getParam("coffeeShop");
+
     return (
       <Content>
         <List>
